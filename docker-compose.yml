@@ -1,0 +1,30 @@
+# qbittorrent-enhanced-nox.yml
+services:
+  qbittorrent-nox:
+    container_name: qbittorrent-nox
+    volumes:
+      - ${PWD}/config:/config
+      - ${PWD}/downloads:/downloads
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 6882:6882/tcp
+    environment:
+      - PAGID=10000
+      - PGID=1000
+      - PUID=1000
+      - QBT_EULA=accept
+      - QBT_VERSION=4.6.6.1 # doesn't quite matter
+      - QBT_WEBUI_PORT=6882
+      - TZ=HKT
+      - UMASK=022
+    tmpfs:
+      - /tmp
+    build: .
+    restart: always
+    networks:
+      - some_network
+networks:
+  home_net:
+    external: true
+    name: some_network
